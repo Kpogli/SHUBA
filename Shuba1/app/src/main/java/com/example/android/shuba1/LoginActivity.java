@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "bar@example.com:world", "kpoglikennedy@gmail.com:shuba"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -326,7 +326,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             // TODO: register the new account here.
-            return true;
+            return false;   //changed from true to false while attempting login to map intent(Kpogli)
         }
 
         @Override
@@ -336,6 +336,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 finish();
+                //I put the intent to switch to map after login here(Kpogli)
+                Intent letMeIn = new Intent(LoginActivity.this, MapsActivity.class);
+                LoginActivity.this.startActivity(letMeIn);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

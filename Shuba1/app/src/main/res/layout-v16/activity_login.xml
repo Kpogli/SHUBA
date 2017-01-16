@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.shuba1.LoginActivity">
+    tools:context="com.example.android.shuba1.LoginActivity"
+    android:background="@android:color/white">
 
     <!-- Login progress -->
     <ProgressBar
@@ -96,6 +97,7 @@
                 android:textStyle="bold"
                 android:background="@color/colorPrimary"
                 android:elevation="0dp"
+                android:layout_marginStart="150dp"
                 android:layout_marginLeft="150dp"
                 android:textColor="@android:color/white" />
 
@@ -120,8 +122,10 @@
                 android:textStyle="bold"
                 android:background="@android:color/holo_red_light"
                 android:elevation="0dp"
+                android:layout_marginStart="150dp"
                 android:layout_marginLeft="150dp"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:onClick="onclick" />
 
             <TextView
                 android:layout_width="match_parent"

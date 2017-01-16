@@ -26,6 +26,7 @@
     <string name="action_register_real">Add Me!</string>
     <string name="back_to_login_page">Already Have An Account. Let Me In!</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps_trial">Map</string>
 
 
 </resources>

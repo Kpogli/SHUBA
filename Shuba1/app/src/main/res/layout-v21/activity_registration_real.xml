@@ -144,7 +144,7 @@
                 android:textAlignment="center"
                 android:contentDescription="@string/back_to_login_page"
                 android:layout_marginTop="30dp"
-                android:textColor="?android:attr/statusBarColor"
+                android:textColor="@android:color/holo_blue_dark"
                 android:clickable="true"
                 android:onClick="onclick_go_back"/>
 

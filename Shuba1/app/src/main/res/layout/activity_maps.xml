@@ -6,3 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.shuba1.MapsActivity" />
+
+<!-- Implementation of find my location button -->
+

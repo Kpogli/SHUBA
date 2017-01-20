@@ -1,0 +1,284 @@
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener, onRequestPermissionResultInterface {
+
+    private GoogleMap mMap;
+    private GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    Marker mCurrLocationMarker;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
+    }
+
+    /**
+     * By Kpogli, i created the API client and handle connection failures here.
+     * 1)GoogleApiClient.Builder is used to configure client.
+       2).addConnectionCallbacks provides callbacks that are called when client connected or disconnected.
+       3).addOnConnectionFailedListener covers scenarios of failed attempt of connect client to service.
+       4).addApi adds the LocationServices API endpoint from Google Play Services.
+       5)mGoogleApiClient.connect(): A client must be connected before executing any operation.
+     */
+    private synchronized void buildGoogleApiClient()
+    {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* Fragment Activity */,
+                        this /* onConnectionFailedListener */)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
+        mGoogleApiClient.connect();
+        //createLocationRequest();
+    }
+
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        //Initialize google play services
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M){
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                buildGoogleApiClient();
+                mMap.setMyLocationEnabled(true);
+            }
+        }
+        else {
+            buildGoogleApiClient();
+            mMap.setMyLocationEnabled(true);
+        }
+
+        // Add a marker at Commercial Area and move the camera
+        LatLng commercialArea = new LatLng(6.683119, -1.574864);
+        mMap.addMarker(new MarkerOptions().position(commercialArea).title("Stop at Commercial Area"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(commercialArea));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(commercialArea, 12.0f));
+
+        // Add marker at Shuttle rank and move the camera
+        LatLng shuttleRank = new LatLng(6.682863, -1.577085);
+        mMap.addMarker(new MarkerOptions().position(shuttleRank).title("Shuttle Rank"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(shuttleRank));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(shuttleRank, 12.0f));
+
+        // Add marker at Hall 7 and move the camera
+        LatLng hall7behind = new LatLng(6.679700, -1.574115);
+        mMap.addMarker(new MarkerOptions().position(hall7behind).title("Stop at Hall 7"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(hall7behind));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall7behind, 12.0f));
+
+        // Add marker at Hall 7 front and move the camera
+        LatLng hall7front = new LatLng(6.679881, -1.573343);
+        mMap.addMarker(new MarkerOptions().position(hall7front).title("Stop at Hall 7 (Front)"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(hall7front));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall7front, 12.0f));
+
+        // Add marker at Indece Supermarket and move the camera
+        LatLng indeceSupermarket = new LatLng(6.677682, -1.572628);
+        mMap.addMarker(new MarkerOptions().position(indeceSupermarket).title("Stop at Indece Supermarket"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(indeceSupermarket));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(indeceSupermarket, 12.0f));
+
+        // Add marker at Indece and move the camera
+        LatLng indece = new LatLng(6.677043, -1.572327);
+        mMap.addMarker(new MarkerOptions().position(indece).title("Stop at Indece"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(indece));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(indece, 12.0f));
+
+        // Add marker at Republic Hall and move the camera
+        LatLng repu = new LatLng(6.677629, -1.573808);
+        mMap.addMarker(new MarkerOptions().position(repu).title("Stop at Republic Hall"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(repu));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(repu, 12.0f));
+
+        // Add marker at Queens Hall and move the camera
+        LatLng queens = new LatLng(6.677267, -1.573883);
+        mMap.addMarker(new MarkerOptions().position(queens).title("Stop at Queens Hall"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(queens));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(queens, 12.0f));
+
+        // Add marker at Katanga/University Hall and move the camera
+        LatLng kat = new LatLng(6.672905, -1.573109);
+        mMap.addMarker(new MarkerOptions().position(kat).title("Stop at Katanga/University Hall"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(kat));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(kat, 12.0f));
+
+        // Add marker at Brunei and move the camera
+        LatLng brunei = new LatLng(6.670991, -1.573241);
+        mMap.addMarker(new MarkerOptions().position(brunei).title("Stop at Brunei"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(brunei));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(brunei, 12.0f));
+
+        // Add marker at IDL Shuttle Rank and move the camera
+        LatLng idlShuttleRank = new LatLng(6.675111, -1.567562);
+        mMap.addMarker(new MarkerOptions().position(idlShuttleRank).title("Stop at IDL Shuttle Rank"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(idlShuttleRank));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(idlShuttleRank, 12.0f));
+
+        // Add marker at College of Engineering labs and move the camera
+        LatLng engineeringLabs = new LatLng(6.672538, -1.567575);
+        mMap.addMarker(new MarkerOptions().position(engineeringLabs).title("Stop at College of Engineering Labs"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(engineeringLabs));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(engineeringLabs, 12.0f));
+
+        // Add marker at Business School and move the camera
+        LatLng businessSchool = new LatLng(6.669804, -1.567042);
+        mMap.addMarker(new MarkerOptions().position(businessSchool).title("Stop at Business School"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(businessSchool));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(businessSchool, 12.0f));
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+        LocationRequest mLocationRequest = new LocationRequest();
+            mLocationRequest.setInterval(1000);
+            mLocationRequest.setFastestInterval(1000);
+            mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+            if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    == PackageManager.PERMISSION_GRANTED) {
+                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,this);
+            }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    //I don't know why you didn't show
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+
+        mLastLocation = location;
+            if (mCurrLocationMarker != null) {
+                mCurrLocationMarker.remove();
+            }
+
+        //Place current location marker
+        LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+        MarkerOptions markeroptions = new MarkerOptions();
+        markeroptions.position(latlng);
+        markeroptions.title("Current Position");
+        markeroptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        mCurrLocationMarker = mMap.addMarker(markeroptions);
+
+        //move map camera
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11.0f));
+
+        //stop location updates
+        if (mGoogleApiClient != null) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+        }
+
+    }
+
+    public static final int MY_PERMISSIONS_REQUESTS_LOCATION = 99;
+    public boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                //Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                    // Show an explanation to the user *Asynchronously* -- don't block
+                    //this thread waiting for the user's response! After the user
+                    //sees the explanation, try again to request the permission.
+
+                    //Prompt the user once explanation has been shown
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            MY_PERMISSIONS_REQUESTS_LOCATION);
+            }else {
+                    // No explanation needed, we can request the permission.
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                            MY_PERMISSIONS_REQUESTS_LOCATION);
+            }
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+
+
+    @Override
+    public void onRequestPermissionResult(int requestCode,
+                                          String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUESTS_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+
+                    // Permission was granted.
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_DENIED) {
+
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                        mMap.setMyLocationEnabled(true);
+                    }
+                    else {
+                        // Permission denied, Disable the functionality that depends on this permission.
+                        Toast.makeText(this, "Permission Denied", Toast.LENGTH_LONG).show();
+                    }
+                    return;
+                }
+
+                // Other 'case' lines check for other permissions this app might require.
+                // You can add here other case statements according to your requirement.
+            }
+        }
+    }
+
+}

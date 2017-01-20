@@ -1,0 +1,16 @@
+<item android:title="Social">
+        <menu>
+            <item
+                android:id="@+id/add_to_group"
+                android:title="Add To Group"
+                android:icon="@drawable/ic_group_add_black_48dp"></item>
+            <item
+                android:id="@+id/group"
+                android:title="Groups"
+                android:icon="@drawable/ic_group_black_48dp"></item>
+            <item
+                android:id="@+id/share"
+                android:title="Share"
+                android:icon="@drawable/ic_share_black_48dp"></item>
+        </menu>
+    </item>

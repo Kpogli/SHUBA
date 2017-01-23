@@ -1,0 +1,3 @@
+UiSettings.setZoomControlsEnabled(true)
+UiSettings.setCompassEnabled(boolean).
+ UiSettings.setMapToolbarEnabled(boolean).

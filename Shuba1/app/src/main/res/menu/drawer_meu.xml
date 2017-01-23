@@ -11,6 +11,10 @@
             android:id="@+id/nearby_stops"
             android:title="Nearby Stops"
             android:icon="@drawable/ic_stop_black_48dp"></item>
+        <item
+            android:id="@+id/crowd"
+            android:title="Crowd"
+            android:icon="@drawable/ic_crowd_black_48dp"></item>
 
     </group>
 
@@ -40,7 +44,7 @@
         android:icon="@drawable/ic_setting_48dp"></item>
     <item
         android:id="@+id/help_and_feedback"
-        android:title="@string/help_feedback"
+        android:title="Help \&amp; Feedback"
         android:icon="@drawable/ic_help_black_48dp"></item>
     </group>
     <group android:checkableBehavior="single"

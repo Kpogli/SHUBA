@@ -359,5 +359,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         startActivity(register);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent endApp = new Intent(Intent.ACTION_MAIN);
+        endApp.addCategory(Intent.CATEGORY_HOME);
+        endApp.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(endApp);
+    }
 }
 

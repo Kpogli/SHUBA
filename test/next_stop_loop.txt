@@ -1,0 +1,13 @@
+String[] locationStops = {commercialArea,shuttleRank,hall7behind,hall7front,indeceSupermarket,indece,repu,queens,kat,brunei,idlShuttleRank,engineeringLabs,businessSchool};
+int i=0;
+
+onClick
+	if(i=locationStops.lenght())
+	int i=0;
+
+	mMap.moveCamera(CameraUpdateFactory.newLatLng(locationStops[i]));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationStops[i], 12.0f));
+	
+	i++;
+
+			

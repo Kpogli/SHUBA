@@ -1,29 +1,20 @@
 package com.example.android.shuba1;
 
-import android.*;
-import android.Manifest;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,11 +26,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-    private Toolbar toolbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    private GoogleMap mMap;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,24 +64,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                     case R.id.nearby_stops:
-                        Intent a = new Intent(getApplicationContext(), LoginActivity.class);
+                        Intent a = new Intent(MapsActivity.this, RegistrationActivity.class);
+                        drawerLayout.closeDrawers();
                         startActivity(a);
+                        break;
 
                     case R.id.crowd:
-                        Intent b = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(b);
+                        Intent crowd = new Intent(MapsActivity.this, CrowdActivity.class);
+                        startActivity(crowd);
+                        drawerLayout.closeDrawers();
+                        item.setChecked(false);
+                        break;
 
                     case R.id.settings:
-                        Intent c = new Intent(getApplicationContext(), LoginActivity.class);
+                        Intent c = new Intent(MapsActivity.this, LoginActivity.class);
+                        drawerLayout.closeDrawers();
                         startActivity(c);
+                        break;
 
                     case R.id.help_and_feedback:
-                        Intent d = new Intent(getApplicationContext(), LoginActivity.class);
+                        Intent d = new Intent(MapsActivity.this, LoginActivity.class);
+                        drawerLayout.closeDrawers();
                         startActivity(d);
+                        break;
 
                     case R.id.sign_out_option:
-                        Intent signOut = new Intent(getApplicationContext(), LoginActivity.class);
+                        Intent signOut = new Intent(MapsActivity.this, LoginActivity.class);
+                        drawerLayout.closeDrawers();
                         startActivity(signOut);
+                        break;
 
 
                 }
@@ -135,7 +137,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().t
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
         // Add marker at Hall 7 and move the camera
@@ -221,13 +222,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fab.setOnClickListener(new View.OnClickListener() {
 
             LatLng[] locationStops = new LatLng[]{commercialArea, shuttleRank, hall7behind, hall7front, indeceSupermarket, indece, repu, queens, kat, brunei, idlShuttleRank, engineeringLabs, businessSchool};
-            String[] locationTitles = new String[]{"Stop at Commercial Area","Shuttle Rank","Stop at Hall 7","Stop at Hall 7 (Front)","Stop at Indece Supermarket","Stop at Indece","Stop at Republic Hall","Stop at Queens Hall","Stop at Katanga/University Hall","Stop at Brunei","Stop at IDL Shuttle Rank","Stop at College of Engineering Labs","Stop at Business School"};
-            int i=0;
+            String[] locationTitles = new String[]{"Stop at Commercial Area", "Shuttle Rank", "Stop at Hall 7", "Stop at Hall 7 (Front)", "Stop at Indece Supermarket", "Stop at Indece", "Stop at Republic Hall", "Stop at Queens Hall", "Stop at Katanga/University Hall", "Stop at Brunei", "Stop at IDL Shuttle Rank", "Stop at College of Engineering Labs", "Stop at Business School"};
+            int i = 0;
 
             @Override
             public void onClick(View view) {
-                if(i==13) {
-                     i = 0;
+                if (i == 13) {
+                    i = 0;
                 }
 
 
@@ -236,15 +237,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locationStops[i], 18.0f));
 
 
-
                 i++;
 
             }
         });
-
-
-
-
 
 
     }

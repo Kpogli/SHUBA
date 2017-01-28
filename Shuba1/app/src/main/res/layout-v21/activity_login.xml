@@ -87,18 +87,49 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical|center_horizontal">
+                <Button
+                    android:id="@+id/gmail_sign_in_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/action_sign_in_gmail"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:elevation="0dp"
+
+                    android:textColor="@android:color/white" />
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
                 android:background="@color/colorPrimary"
                 android:elevation="0dp"
-                android:layout_marginStart="150dp"
+
                 android:textColor="@android:color/white" />
+                <Button
+                    android:id="@+id/fb_sign_in_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/action_sign_in_fb"
+                    android:textStyle="bold"
+                    android:background="@color/colorPrimary"
+                    android:elevation="0dp"
+
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -112,6 +143,11 @@
                 android:layout_marginBottom="24dp"
                 android:layout_marginTop="24dp" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_vertical|center_horizontal">
             <Button
                 android:id="@+id/email_register_button"
                 style="?android:textAppearanceSmall"
@@ -121,9 +157,10 @@
                 android:textStyle="bold"
                 android:background="@android:color/holo_red_light"
                 android:elevation="0dp"
-                android:layout_marginStart="150dp"
                 android:textColor="@android:color/white"
-                android:onClick="onclick" />
+                android:onClick="onclick"
+                android:layout_gravity="center_vertical" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

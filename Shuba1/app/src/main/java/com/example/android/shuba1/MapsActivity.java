@@ -22,6 +22,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -31,6 +33,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     NavigationView navigationView;
     private GoogleMap mMap;
     private Toolbar toolbar;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) {
+            finish();
+            Intent backToLogin = new Intent(this, LoginActivity.class);
+            startActivity(backToLogin);
+        }
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
 
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_map);
@@ -89,8 +101,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
 
                     case R.id.sign_out_option:
-                        Intent signOut = new Intent(MapsActivity.this, LoginActivity.class);
                         drawerLayout.closeDrawers();
+                        firebaseAuth.signOut();
+                        finish();
+                        Intent signOut = new Intent(MapsActivity.this, LoginActivity.class);
+
                         startActivity(signOut);
                         break;
 

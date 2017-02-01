@@ -110,6 +110,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             //display a toast for now
                             Toast.makeText(RegistrationActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+                            Intent goToSignIn = new Intent(getApplicationContext(),LoginActivity.class);
+                            startActivity(goToSignIn);
                         } else {
                             Toast.makeText(RegistrationActivity.this, "Registration Failed. Please try again.", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();

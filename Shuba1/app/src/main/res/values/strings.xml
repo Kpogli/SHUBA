@@ -4,7 +4,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Let Me In</string>
+    <string name="action_sign_in">Log In</string>
     <string name="action_sign_in_gmail">GMAIL</string>
     <string name="action_sign_in_fb">facebook</string>
     <string name="action_sign_in_short">Sign in</string>

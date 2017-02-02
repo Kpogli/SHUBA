@@ -90,31 +90,40 @@
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_vertical|center_horizontal">
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/googleBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="60dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
 
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
                 android:background="@color/colorPrimary"
                 android:elevation="0dp"
 
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.gms.common.SignInButton
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="10dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/fb_sign_in_button"
                     style="?android:textAppearanceSmall"
-                    android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
 
                     android:text="@string/action_sign_in_fb"
                     android:textStyle="bold"
@@ -122,7 +131,6 @@
                     android:elevation="0dp"
 
                     android:textColor="@android:color/white" />
-
             </LinearLayout>
 
             <TextView
@@ -131,22 +139,20 @@
                 android:id="@+id/OR"
                 android:text="@string/OR"
                 android:fontFamily="serif"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 android:textAlignment="center"
                 android:contentDescription="@string/OR"
                 android:layout_marginBottom="24dp"
                 android:layout_marginTop="24dp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_vertical|center_horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <Button
                 android:id="@+id/email_register_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:text="@string/action_register"
                 android:textStyle="bold"
                 android:background="@android:color/holo_red_light"

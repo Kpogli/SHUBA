@@ -109,11 +109,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        //start activity for map
-                        finish();
-                        Intent letMeIn = new Intent(getApplicationContext(), MapsActivity.class);
-                        startActivity(letMeIn);
+                        if (task.isSuccessful()) {
+                            progressDialog.dismiss();
+                            //start activity for map
+                            finish();
+                            Intent letMeIn = new Intent(getApplicationContext(), MapsActivity.class);
+                            startActivity(letMeIn);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login Failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
                     }
                 });
 

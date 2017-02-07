@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,9 +29,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    private TextView email;
     private GoogleMap mMap;
     private Toolbar toolbar;
     private FirebaseAuth firebaseAuth;
@@ -54,6 +57,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
 
+
         toolbar = (Toolbar) findViewById(R.id.app_bar_map);
         setSupportActionBar(toolbar);
 
@@ -64,6 +68,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View header = navigationView.getHeaderView(0);
+        email = (TextView)header.findViewById(R.id.email);
+        email.setText(user.getEmail());
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -79,7 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             myPosition = new LatLng(latitude, longitude);
 
-            mMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
+            //mMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
         }
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

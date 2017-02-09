@@ -187,7 +187,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             myPosition = new LatLng(latitude, longitude);
 
-            mMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
+            //mMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
         }
 
 

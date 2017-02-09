@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener{
     private Button emailRegisterButton;
@@ -26,6 +29,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
 
 
     @Override
@@ -34,6 +38,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_registration_real);
 
         firebaseAuth = FirebaseAuth.getInstance();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         progressDialog = new ProgressDialog(this);
 
@@ -45,6 +51,17 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         emailRegisterButton.setOnClickListener(this);
 
+
+    }
+
+    private void saveUserFullName() {
+        String fullName = editTextFullName.getText().toString().trim();
+
+        UserFullName userFullName = new UserFullName(fullName);
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        databaseReference.child(user.getUid()).setValue(userFullName);
 
     }
 
@@ -109,6 +126,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             //will do profile activity here later
                             //display a toast for now
                             Toast.makeText(RegistrationActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            saveUserFullName();
                             progressDialog.dismiss();
                             Intent goToSignIn = new Intent(getApplicationContext(),LoginActivity.class);
                             startActivity(goToSignIn);

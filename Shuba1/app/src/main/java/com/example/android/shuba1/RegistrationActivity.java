@@ -61,7 +61,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        databaseReference.child(user.getUid()).setValue(userFullName);
+        databaseReference.child("users").child(user.getUid()).setValue(userFullName);
 
     }
 

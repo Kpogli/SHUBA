@@ -32,6 +32,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +45,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     private TextView email;
+    private TextView userName;
     private GoogleMap mMap;
     private LocationListener locationListener;
     private LocationManager locationManager;
@@ -86,6 +88,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View header = navigationView.getHeaderView(0);
+        userName = (TextView) header.findViewById(R.id.user_name);
+        userName.setText(user.getDisplayName());
         email = (TextView) header.findViewById(R.id.email);
         email.setText(user.getEmail());
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

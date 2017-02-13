@@ -13,10 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,6 +32,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private UserProfileChangeRequest profileUpdates;
+    private FirebaseUser user;
 
 
     @Override
@@ -61,7 +65,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
+
         databaseReference.child("users").child(user.getUid()).setValue(userFullName);
+
+
 
     }
 
@@ -72,7 +79,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void registerUser(){
-        String fullName = editTextFullName.getText().toString().trim();
+        final String fullName = editTextFullName.getText().toString().trim();
         String emailR = editTextEmail.getText().toString().trim();
         String password1 = editTextPassword1.getText().toString().trim();
         String password2 = editTextPassword2.getText().toString().trim();
@@ -127,6 +134,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             //display a toast for now
                             Toast.makeText(RegistrationActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                             saveUserFullName();
+
                             progressDialog.dismiss();
                             Intent goToSignIn = new Intent(getApplicationContext(),LoginActivity.class);
                             startActivity(goToSignIn);
@@ -137,7 +145,20 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         }
 
                     }
-                });
+
+                }).addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                user = FirebaseAuth.getInstance().getCurrentUser();
+
+                profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(fullName)
+                        .build();
+                user.updateProfile(profileUpdates);
+
+
+            }
+        });
     }
 
 

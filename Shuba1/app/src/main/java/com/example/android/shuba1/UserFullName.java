@@ -7,12 +7,14 @@ package com.example.android.shuba1;
 public class UserFullName {
 
     public String fullName;
+    public String email;
 
     public UserFullName() {
 
     }
 
-    public UserFullName(String fullName) {
+    public UserFullName(String fullName, String email) {
         this.fullName = fullName;
+        this.email = email;
     }
 }

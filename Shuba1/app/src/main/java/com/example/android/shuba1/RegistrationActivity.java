@@ -60,8 +60,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
     private void saveUserFullName() {
         String fullName = editTextFullName.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
 
-        UserFullName userFullName = new UserFullName(fullName);
+        UserFullName userFullName = new UserFullName(fullName,email);
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 

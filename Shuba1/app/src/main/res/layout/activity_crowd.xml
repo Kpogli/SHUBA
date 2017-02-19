@@ -6,16 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
     <include
         android:id="@+id/app_bar_crowd"
         style="@style/AppTheme"
         layout="@layout/app_bar_crowd"
         android:background="@color/colorPrimary"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:visibility="visible" />
 
         <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/app_bar_crowd"            >
 
             <TextView
                 android:text="TextView"
@@ -43,5 +49,6 @@
         android:id="@+id/send_button"/>
 
     </LinearLayout>
+
 
 </RelativeLayout>

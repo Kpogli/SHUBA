@@ -35,7 +35,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -58,6 +62,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LatLng latLng;
     private LatLng myPosition;
 
+    private String nameOfCurrentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             startActivity(backToLogin);
         }
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_map);
         setSupportActionBar(toolbar);
@@ -146,6 +151,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {

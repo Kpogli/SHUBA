@@ -82,9 +82,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     private void registerUser(){
         final String fullName = editTextFullName.getText().toString().trim();
         String emailR = editTextEmail.getText().toString().trim();
+        String password = null;
         String password1 = editTextPassword1.getText().toString().trim();
         String password2 = editTextPassword2.getText().toString().trim();
-        String password = null;
 
         if (TextUtils.isEmpty(fullName)) {
             //full name not given
@@ -137,8 +137,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                             saveUserFullName();
 
                             progressDialog.dismiss();
-                            Intent goToSignIn = new Intent(getApplicationContext(),LoginActivity.class);
-                            startActivity(goToSignIn);
+
+
                         } else {
                             Toast.makeText(RegistrationActivity.this, "Registration Failed. Please try again.", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
@@ -157,11 +157,37 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         .build();
                 user.updateProfile(profileUpdates);
 
+                FirebaseAuth.getInstance().signOut();
+                reLogin();
+
+                //Intent goToSignIn = new Intent(getApplicationContext(),LoginActivity.class);
+                //startActivity(goToSignIn);
 
             }
         });
     }
 
+    public void reLogin() {
+        String emailR = editTextEmail.getText().toString().trim();
+        String password = editTextPassword1.getText().toString().trim();
+        firebaseAuth.signInWithEmailAndPassword(emailR,password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            //progressDialog.dismiss();
+                            //start activity for map
+                            finish();
+                            Intent letMeIn = new Intent(getApplicationContext(), MapsActivity.class);
+                            startActivity(letMeIn);
+                        } else {
+                            Toast.makeText(RegistrationActivity.this, "Login Failed. Please try again.", Toast.LENGTH_SHORT).show();
+                            //progressDialog.dismiss();
+                        }
+                    }
+                });
+
+    }
 
     public void onClick(View view)
     {

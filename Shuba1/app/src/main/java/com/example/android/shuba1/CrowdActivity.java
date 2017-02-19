@@ -4,9 +4,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CrowdActivity extends AppCompatActivity {
     private Toolbar toolbar;
+    private Button buttonSendMessage;
+    private EditText inputMessage;
+    private TextView chatConversation;
+
+    private FirebaseAuth firebaseAuth;
+
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +34,16 @@ public class CrowdActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        buttonSendMessage = (Button) findViewById(R.id.send_button);
+        inputMessage = (EditText) findViewById(R.id.crowd_message);
+        chatConversation = (TextView) findViewById(R.id.textView);
+
+
 
     }
 

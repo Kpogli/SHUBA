@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -71,18 +72,19 @@ public class CrowdActivity extends AppCompatActivity {
                 Map<String,Object> map2 = new HashMap<String, Object>();
                 map2.put("name", user.getDisplayName());
                 map2.put("msg", inputMessage.getText().toString());
+                map2.put("timestamp", ServerValue.TIMESTAMP);
 
                 messages.updateChildren(map2);
 
                 databaseReference.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        append_crowd_conversation(dataSnapshot);
+                        //append_crowd_conversation(dataSnapshot);
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        append_crowd_conversation(dataSnapshot);
+                        //append_crowd_conversation(dataSnapshot);
                     }
 
                     @Override

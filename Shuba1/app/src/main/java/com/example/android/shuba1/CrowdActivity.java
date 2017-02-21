@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +27,7 @@ public class CrowdActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Button buttonSendMessage;
     private EditText inputMessage;
-    private TextView chatConversation;
+    private ListView chatConversation;
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -58,7 +59,7 @@ public class CrowdActivity extends AppCompatActivity {
 
         buttonSendMessage = (Button) findViewById(R.id.send_button);
         inputMessage = (EditText) findViewById(R.id.crowd_message);
-        chatConversation = (TextView) findViewById(R.id.textView);
+        chatConversation = (ListView) findViewById(R.id.msg_view);
 
         buttonSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,18 +74,19 @@ public class CrowdActivity extends AppCompatActivity {
                 map2.put("name", user.getDisplayName());
                 map2.put("msg", inputMessage.getText().toString());
                 map2.put("timestamp", ServerValue.TIMESTAMP);
+                map2.put("fromId", user.getUid());
 
                 messages.updateChildren(map2);
 
                 databaseReference.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        //append_crowd_conversation(dataSnapshot);
+
                     }
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        //append_crowd_conversation(dataSnapshot);
+
                     }
 
                     @Override
@@ -108,18 +110,7 @@ public class CrowdActivity extends AppCompatActivity {
 
     }
 
-    private String chat_msg, chat_user_name;
 
-    private void append_crowd_conversation(DataSnapshot dataSnapshot) {
-        Iterator i = dataSnapshot.getChildren().iterator();
-
-        while (i.hasNext()) {
-            chat_msg = (String) ((DataSnapshot)i.next()).getValue();
-            chat_user_name = (String) ((DataSnapshot)i.next()).getValue();
-
-            chatConversation.append(chat_user_name +" : "+chat_msg +" \n");
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

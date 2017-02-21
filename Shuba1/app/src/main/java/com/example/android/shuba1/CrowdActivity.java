@@ -78,6 +78,8 @@ public class CrowdActivity extends AppCompatActivity {
 
                 messages.updateChildren(map2);
 
+                inputMessage.setText("");
+
                 databaseReference.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {

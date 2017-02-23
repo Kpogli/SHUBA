@@ -138,7 +138,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         firebaseAuth.signOut();
                         finish();
                         Intent signOut = new Intent(MapsActivity.this, LoginActivity.class);
-
                         startActivity(signOut);
                         break;
 

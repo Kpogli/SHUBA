@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -75,6 +76,7 @@ public class CrowdActivity extends AppCompatActivity {
                 map2.put("msg", inputMessage.getText().toString());
                 map2.put("timestamp", ServerValue.TIMESTAMP);
                 map2.put("fromId", user.getUid());
+                //map2.put("time", new Date().getTime());
 
                 messages.updateChildren(map2);
 

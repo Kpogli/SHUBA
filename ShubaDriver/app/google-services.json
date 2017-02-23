@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "562927543588",
+    "firebase_url": "https://knustshubaproject.firebaseio.com",
+    "project_id": "knustshubaproject",
+    "storage_bucket": "knustshubaproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562927543588:android:3597cf8095891940",
+        "android_client_info": {
+          "package_name": "com.example.android.shuba1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562927543588-vsenmdgna7ik7pqhjn9tkqaguk01lam1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAoq3toc8TJyle4s-_1GicsQrQ8LkXPoI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562927543588:android:9751399c056b9b3f",
+        "android_client_info": {
+          "package_name": "com.example.android.shubadriver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562927543588-vsenmdgna7ik7pqhjn9tkqaguk01lam1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAoq3toc8TJyle4s-_1GicsQrQ8LkXPoI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

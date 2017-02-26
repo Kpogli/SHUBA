@@ -3,12 +3,14 @@ package com.example.android.shuba1;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,6 +55,9 @@ public class CrowdActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        //load chat room contents
+        displayChatMessages();
+
         final FirebaseUser user = firebaseAuth.getCurrentUser();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("crowd");
@@ -65,21 +70,11 @@ public class CrowdActivity extends AppCompatActivity {
         buttonSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String,Object> map1 = new HashMap<String, Object>();
-                temp_key = databaseReference.push().getKey();
-                databaseReference.updateChildren(map1);
-
-                messages = databaseReference.child(temp_key);
-
-                Map<String,Object> map2 = new HashMap<String, Object>();
-                map2.put("name", user.getDisplayName());
-                map2.put("msg", inputMessage.getText().toString());
-                map2.put("timestamp", ServerValue.TIMESTAMP);
-                map2.put("fromId", user.getUid());
-                //map2.put("time", new Date().getTime());
-
-                messages.updateChildren(map2);
-
+                FirebaseDatabase.getInstance()
+                        .getReference()
+                        .child("crowd")
+                        .push()
+                        .setValue(new ChatMessage(inputMessage.getText().toString(),user.getDisplayName(),user.getUid()));
                 inputMessage.setText("");
 
                 databaseReference.addChildEventListener(new ChildEventListener() {
@@ -114,7 +109,16 @@ public class CrowdActivity extends AppCompatActivity {
 
     }
 
+    private void displayChatMessages() {
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -122,6 +126,11 @@ public class CrowdActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();   //close this activity and return to previous.:)
         }
+
+        if (item.getItemId() == R.id.nothing_yet) {
+            Toast.makeText(CrowdActivity.this, "Does nothing yet", Toast.LENGTH_SHORT).show();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

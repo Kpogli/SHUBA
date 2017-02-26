@@ -36,12 +36,15 @@
         android:orientation="horizontal"
         android:background="@color/common_google_signin_btn_text_dark_default">
 
+
     <EditText
         android:id="@+id/crowd_message"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:hint="@string/hint_message"/>
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

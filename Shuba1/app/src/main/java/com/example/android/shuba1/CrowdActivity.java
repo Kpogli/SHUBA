@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -19,8 +20,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.database.ServerValue;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,6 +38,8 @@ public class CrowdActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private DatabaseReference messages;
+
+    private FirebaseListAdapter<ChatMessage> adapter;
 
     private String userName;
     private String temp_key;
@@ -56,16 +61,16 @@ public class CrowdActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         //load chat room contents
-        displayChatMessages();
+
 
         final FirebaseUser user = firebaseAuth.getCurrentUser();
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("crowd");
 
+        displayChatMessages();
 
         buttonSendMessage = (Button) findViewById(R.id.send_button);
         inputMessage = (EditText) findViewById(R.id.crowd_message);
-        chatConversation = (ListView) findViewById(R.id.msg_view);
 
         buttonSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,33 +81,6 @@ public class CrowdActivity extends AppCompatActivity {
                         .push()
                         .setValue(new ChatMessage(inputMessage.getText().toString(),user.getDisplayName(),user.getUid()));
                 inputMessage.setText("");
-
-                databaseReference.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
             }
         });
 
@@ -110,6 +88,28 @@ public class CrowdActivity extends AppCompatActivity {
     }
 
     private void displayChatMessages() {
+        chatConversation = (ListView) findViewById(R.id.msg_view);
+
+        adapter = new FirebaseListAdapter<ChatMessage>(this,ChatMessage.class,R.layout.message,FirebaseDatabase.getInstance().getReference().child("crowd")) {
+            @Override
+            protected void populateView(View v, ChatMessage model, int position) {
+
+                // Get references to the views of message.xml
+                TextView msg = (TextView)v.findViewById(R.id.message_text);
+                TextView name = (TextView)v.findViewById(R.id.message_sender);
+                TextView timestamp = (TextView)v.findViewById(R.id.message_time);
+
+                // Set their text
+                msg.setText(model.getMsg());
+                name.setText(model.getName());
+
+                // Format the date before showing it
+                timestamp.setText(android.text.format.DateFormat.format("dd-MM-yyyy (HH:mm:ss)", model.getTimestamp()));
+
+            }
+        };
+
+        chatConversation.setAdapter(adapter);
 
     }
 

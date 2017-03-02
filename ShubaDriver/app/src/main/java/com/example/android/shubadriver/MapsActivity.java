@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -226,6 +227,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             Toast.makeText(getApplicationContext(),"changed", Toast.LENGTH_SHORT).show();
+
+            final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+            FirebaseDatabase.getInstance()
+                    .getReference("buses")
+                    .child(user.getUid())
+                    .setValue(new BusLocator(user.getEmail(), location.getLatitude(), location.getLongitude()));
+
 
         }
         @Override

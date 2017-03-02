@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final FirebaseUser user = firebaseAuth.getCurrentUser();
 
         userName = (TextView) findViewById(R.id.driver_name);
-        userName.setText(user.getEmail());
+        userName.setText(user.getDisplayName());
 
         buttonRefresh = (Button) findViewById(R.id.refresh_button);
         buttonRoute = (Button) findViewById(R.id.route_button);

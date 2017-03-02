@@ -9,12 +9,14 @@ import java.util.Date;
 public class BusLocator {
 
     private String driverName;
+    private String driverEmail;
     private Double latitude;
     private Double longitude;
     private Long timestamp;
 
-    public BusLocator(String driverName, Double latitude, Double longitude) {
+    public BusLocator(String driverName, String driverEmail, Double latitude, Double longitude) {
         this.driverName = driverName;
+        this.driverEmail = driverEmail;
         this.latitude = latitude;
         this.longitude = longitude;
 
@@ -29,6 +31,8 @@ public class BusLocator {
 
     public void setDriverName(String driverName) { this.driverName = driverName;}
 
+    public void setDriverEmail(String driverEmail) { this.driverEmail = driverEmail;}
+
     public void setLatitude(Double latitude) { this.latitude = latitude;}
 
     public void setLongitude(Double longitude) { this.longitude = longitude;}
@@ -40,6 +44,8 @@ public class BusLocator {
 
 
     public String getDriverName() { return driverName;}
+
+    public String getDriverEmail() { return driverEmail;}
 
     public Double getLatitude() { return latitude;}
 

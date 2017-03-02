@@ -15,4 +15,11 @@
     </string>
     <string name="login">Login</string>
     <string name="title_activity_maps">Map</string>
+    <string name="new_driver">New Driver</string>
+    <string name="registration_title">New Driver</string>
+    <string name="prompt_full_name">Full Name</string>
+    <string name="action_register_short">Register</string>
+    <string name="prompt_repeat_password">Repeat Password</string>
+    <string name="action_register_real">Add New Driver</string>
+    <string name="back_to_login_page">Already Registered. Back To Sign In</string>
 </resources>

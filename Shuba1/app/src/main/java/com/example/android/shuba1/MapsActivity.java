@@ -39,9 +39,11 @@ import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -59,6 +61,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Toolbar toolbar;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private ChildEventListener childEventListener;
+    private DatabaseReference busesRef = FirebaseDatabase.getInstance().getReference("buses");
     private static final int MY_LOCATION_REQUEST_CODE = 1;
     private Criteria criteria;
     private Location location;
@@ -355,6 +359,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
+
+
 
 
     @Override

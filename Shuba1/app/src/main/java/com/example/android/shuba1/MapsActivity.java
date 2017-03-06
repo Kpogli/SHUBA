@@ -33,7 +33,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,6 +47,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -70,6 +75,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LatLng myPosition;
 
     private String nameOfCurrentUser;
+
+    private BusLocator busLocator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +194,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else {
 
         }
+
+        // Show buses on map
+        trackBuses(mMap);
 
         // Creating a criteria object to retrieve provider
         criteria = new Criteria();
@@ -360,6 +370,76 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+
+    private void trackBuses(final GoogleMap mMap) {
+
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        final Map<String, Marker> markers = new HashMap<>();
+
+        childEventListener = busesRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                busLocator = dataSnapshot.getValue(BusLocator.class);
+                String driverName = busLocator.getDriverName();
+                Double latitude = busLocator.getLatitude();
+                Double longitude = busLocator.getLongitude();
+                Long timestamp = busLocator.getTimestamp();
+                LatLng bus = new LatLng(latitude,longitude);
+
+                MarkerOptions busMarkerOptions = new MarkerOptions();
+                busMarkerOptions.position(bus);
+                busMarkerOptions.title(driverName);
+                busMarkerOptions.snippet("Snippet goes here later");
+
+                busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
+                Marker marker = mMap.addMarker(busMarkerOptions);
+                markers.put(dataSnapshot.getKey(), marker);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+
+                busLocator = dataSnapshot.getValue(BusLocator.class);
+                String driverName = busLocator.getDriverName();
+                Double latitude = busLocator.getLatitude();
+                Double longitude = busLocator.getLongitude();
+                Long timestamp = busLocator.getTimestamp();
+                LatLng bus = new LatLng(latitude,longitude);
+
+                MarkerOptions busMarkerOptions = new MarkerOptions();
+                busMarkerOptions.position(bus);
+                busMarkerOptions.title(driverName);
+                busMarkerOptions.snippet("Snippet goes here later");
+
+                if (markers.containsKey(dataSnapshot.getKey())) {
+                    markers.get(dataSnapshot.getKey()).remove();
+                }
+
+                busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+
+                Marker marker = mMap.addMarker(busMarkerOptions);
+                markers.put(dataSnapshot.getKey(), marker);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 
 

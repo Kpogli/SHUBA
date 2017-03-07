@@ -390,9 +390,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions busMarkerOptions = new MarkerOptions();
                 busMarkerOptions.position(bus);
                 busMarkerOptions.title(driverName);
-                busMarkerOptions.snippet("Snippet goes here later");
+                busMarkerOptions.snippet("Estimated time to next stop");
 
-                busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_25px));
 
                 Marker marker = mMap.addMarker(busMarkerOptions);
                 markers.put(dataSnapshot.getKey(), marker);
@@ -412,13 +412,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions busMarkerOptions = new MarkerOptions();
                 busMarkerOptions.position(bus);
                 busMarkerOptions.title(driverName);
-                busMarkerOptions.snippet("Snippet goes here later");
+                busMarkerOptions.snippet("Estimated time to next stop");
 
                 if (markers.containsKey(dataSnapshot.getKey())) {
                     markers.get(dataSnapshot.getKey()).remove();
                 }
 
-                busMarkerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_25px));
 
                 Marker marker = mMap.addMarker(busMarkerOptions);
                 markers.put(dataSnapshot.getKey(), marker);

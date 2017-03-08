@@ -123,9 +123,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                     case R.id.nearby_stops:
-                        Intent a = new Intent(MapsActivity.this, RegistrationActivity.class);
+                        //Intent a = new Intent(MapsActivity.this, RegistrationActivity.class);
                         drawerLayout.closeDrawers();
-                        startActivity(a);
+                        //startActivity(a);
                         break;
 
                     case R.id.crowd:
@@ -136,15 +136,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         break;
 
                     case R.id.settings:
-                        Intent c = new Intent(MapsActivity.this, LoginActivity.class);
+                        //Intent c = new Intent(MapsActivity.this, LoginActivity.class);
                         drawerLayout.closeDrawers();
-                        startActivity(c);
+                        //startActivity(c);
                         break;
 
                     case R.id.help_and_feedback:
-                        Intent d = new Intent(MapsActivity.this, LoginActivity.class);
+                        //Intent d = new Intent(MapsActivity.this, LoginActivity.class);
                         drawerLayout.closeDrawers();
-                        startActivity(d);
+                        //startActivity(d);
                         break;
 
                     case R.id.sign_out_option:

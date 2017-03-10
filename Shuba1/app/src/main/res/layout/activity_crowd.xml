@@ -22,10 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:divider="@color/wallet_hint_foreground_holo_light"
+        android:divider="@color/tw__composer_red"
         android:transcriptMode="alwaysScroll"
-        android:dividerHeight="16dp"
-        android:layout_marginBottom="4dp"
+        android:dividerHeight="4dp"
+        android:layout_marginBottom="2dp"
         android:id="@+id/msg_view"
         android:background="@color/cast_expanded_controller_seek_bar_progress_background_tint_color" />
 

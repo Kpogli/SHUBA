@@ -1,5 +1,6 @@
 package com.example.android.shuba1;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -51,6 +52,8 @@ public class CrowdActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_crowd);
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(Color.RED);
+
 
         //add back arrow to toolbar
         if (getSupportActionBar() != null) {

@@ -76,6 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int MY_LOCATION_REQUEST_CODE = 1;
     private Criteria criteria;
     private Location location;
+    private Location markerLocation;
     private LatLng latLng;
     private LatLng myPosition;
 
@@ -237,6 +238,55 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //mMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
         }
 
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+                if (!isLocationEnabled()) {
+                    showAlert();
+                } else {
+                    if (location == null) {
+                        LatLng markerPosition = marker.getPosition();
+                        markerLocation = new Location("marker");
+                        markerLocation.setLatitude(markerPosition.latitude);
+                        markerLocation.setLongitude(markerPosition.longitude);
+                        marker.remove();
+                        Toast.makeText(getApplicationContext(), "Establish Position 1st", Toast.LENGTH_SHORT).show();
+                        //stayAlert();
+                        refreshMarkers();
+                    } else {
+                        LatLng markerPosition = marker.getPosition();
+                        markerLocation = new Location("marker");
+                        markerLocation.setLatitude(markerPosition.latitude);
+                        markerLocation.setLongitude(markerPosition.longitude);
+                        marker.remove();
+                        float range = location.distanceTo(markerLocation);
+                        //stayAlert();
+                        refreshMarkers();
+                        if (range > 100) {
+                            Toast.makeText(getApplicationContext(), "You are "+ range +" metres out of range! Get closer.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            stayAlert();
+                        }
+
+
+                        //Toast.makeText(getApplicationContext(), "You are "+ range +" metres away! Get closer.", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+
+            }
+        });
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -269,8 +319,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     i = 0;
                 }
 
-                mMap.addMarker(new MarkerOptions().position(locStops.get(i)).title(locTitles.get(i))).showInfoWindow();
+                mMap.addMarker(new MarkerOptions().draggable(true).position(locStops.get(i)).title(locTitles.get(i))).showInfoWindow();
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(locStops.get(i),18.0f));
+
+
 
                 Toast.makeText(getApplicationContext(),"Stop is at "+ locTitles.get(i),Toast.LENGTH_SHORT).show();
 
@@ -303,6 +355,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
         dialog.show();
+    }
+
+    private void stayAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("You are at a Shuttle Stop")
+                .setMessage("Will you wait for a Shuttle Bus here?")
+                .setPositiveButton("Yes. Please hurry!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "A bus is on the way. Patience please.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        dialog.show();
+    }
+
+    private void refreshMarkers() {
+        for (int x = 0; x < locationTitles.size(); x++) {
+            mMap.addMarker(new MarkerOptions().draggable(true).position(locationStops.get(x)).title(locationTitles.get(x)));
+        }
     }
 
     private boolean isLocationEnabled() {
@@ -402,7 +479,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 locationStops.add(stop);
                 locationTitles.add(stopName);
 
-                mMap.addMarker(new MarkerOptions().position(stop).title(stopName)).showInfoWindow();
+                mMap.addMarker(new MarkerOptions().position(stop).title(stopName).draggable(true)).showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(stop));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(stop,18.0f));
 

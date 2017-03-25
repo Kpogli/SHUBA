@@ -259,13 +259,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         markerLocation.setLatitude(markerPosition.latitude);
                         markerLocation.setLongitude(markerPosition.longitude);
                         marker.remove();
+                        String markerLocationTitle = marker.getTitle();
                         float range = location.distanceTo(markerLocation);
                         //stayAlert();
                         refreshMarkers();
                         if (range > 100) {
                             Toast.makeText(getApplicationContext(), "You are "+ range +" metres out of range! Get closer.", Toast.LENGTH_SHORT).show();
                         } else {
-                            stayAlert();
+                            stayAlert(markerLocationTitle);
                         }
 
 
@@ -357,13 +358,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         dialog.show();
     }
 
-    private void stayAlert() {
+    private void stayAlert(final String markerLocationTitle) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("You are at a Shuttle Stop")
                 .setMessage("Will you wait for a Shuttle Bus here?")
                 .setPositiveButton("Yes. Please hurry!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                        FirebaseDatabase.getInstance()
+                                .getReference("waiting")
+                                .child(markerLocationTitle)
+                                .child(user.getUid())
+                                .child("waiter")
+                                .setValue(user.getEmail());
+
                         Toast.makeText(getApplicationContext(), "A bus is on the way. Patience please.", Toast.LENGTH_SHORT).show();
                     }
                 })

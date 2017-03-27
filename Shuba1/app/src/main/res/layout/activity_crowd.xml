@@ -23,6 +23,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:divider="@color/tw__composer_red"
+        android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll"
         android:dividerHeight="4dp"
         android:layout_marginBottom="2dp"

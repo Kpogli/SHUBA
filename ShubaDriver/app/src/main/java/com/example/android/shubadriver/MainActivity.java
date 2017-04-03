@@ -13,7 +13,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView userName;
     private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
     private Button buttonRefresh;
@@ -31,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
     private List<WaitingCommuter> result;
     private WaitingCommuterAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("stops");
 
         userName = (TextView) findViewById(R.id.driver_name);
         userName.setText(user.getDisplayName());
@@ -66,20 +75,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        createResult();
-
         adapter = new WaitingCommuterAdapter(result);
 
         recyclerView.setAdapter(adapter);
 
+        updateList();
+
     }
 
-    private void createResult(){
 
-        for (int i = 0; i < 10; i++) {
-            result.add(new WaitingCommuter("stopName", "waiterCount", ""));
+    private void updateList() {
+        databaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                result.add(dataSnapshot.getValue(WaitingCommuter.class));
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                WaitingCommuter waitingCommuter = dataSnapshot.getValue(WaitingCommuter.class);
+                int index = getItemIndex(waitingCommuter);
+                result.set(index, waitingCommuter);
+                adapter.notifyItemChanged(index);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                WaitingCommuter waitingCommuter = dataSnapshot.getValue(WaitingCommuter.class);
+                int index = getItemIndex(waitingCommuter);
+                result.remove(index);
+                adapter.notifyItemRemoved(index);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private int getItemIndex(WaitingCommuter waitingCommuter) {
+        int index = -1;
+
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i).longitude.equals(waitingCommuter.longitude)) {
+                index = i;
+                break;
+            }
         }
-
+        return index;
     }
 
     @Override

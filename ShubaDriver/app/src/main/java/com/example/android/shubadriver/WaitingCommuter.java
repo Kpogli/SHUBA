@@ -8,11 +8,13 @@ public class WaitingCommuter {
     public String stopName;
     public String waiterCount;
     public String key;
+    public Double longitude;
 
-    public WaitingCommuter(String stopName, String waiterCount, String key) {
+    public WaitingCommuter(String stopName, String waiterCount, String key, Double longitude) {
         this.stopName = stopName;
         this.waiterCount = waiterCount;
         this.key = key;
+        this.longitude = longitude;
     }
 
     public WaitingCommuter() {
@@ -25,9 +27,13 @@ public class WaitingCommuter {
 
     public void setKey(String key) {this.key = key;}
 
+    public void setLongitude(Double longitude) {this.longitude = longitude;}
+
     public String getStopName() {return stopName;}
 
     public String getWaiterCount() {return waiterCount;}
 
     public String getKey() {return key;}
+
+    public Double getLongitude() {return longitude;}
 }

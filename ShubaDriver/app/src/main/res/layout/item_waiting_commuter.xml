@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+    android:layout_margin="10dp">
 
     <LinearLayout
         android:gravity="center_vertical"
@@ -19,7 +19,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="BUS STOP"
-            android:textSize="30sp"
+            android:textSize="16sp"
             android:textStyle="bold"/>
 
         <ImageView
@@ -38,7 +38,7 @@
             android:paddingRight="5dp"
             android:text="0"
             android:textStyle="bold"
-            android:textSize="30sp"/>
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/clearButton"

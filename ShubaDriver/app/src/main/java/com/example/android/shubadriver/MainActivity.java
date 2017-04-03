@@ -3,6 +3,9 @@ package com.example.android.shubadriver;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +14,9 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +27,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonRefresh;
     private Button buttonRoute;
     private Button buttonMapView;
+
+    private RecyclerView recyclerView;
+    private List<WaitingCommuter> result;
+    private WaitingCommuterAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +56,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonRefresh.setOnClickListener(this);
         buttonRoute.setOnClickListener(this);
         buttonMapView.setOnClickListener(this);
+
+        result = new ArrayList<>();
+
+        recyclerView = (RecyclerView) findViewById(R.id.waiting_commuters_rv);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        createResult();
+
+        adapter = new WaitingCommuterAdapter(result);
+
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    private void createResult(){
+
+        for (int i = 0; i < 10; i++) {
+            result.add(new WaitingCommuter("stopName", "waiterCount", ""));
+        }
 
     }
 

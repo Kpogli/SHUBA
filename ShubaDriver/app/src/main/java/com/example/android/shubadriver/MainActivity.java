@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<WaitingCommuter> result;
     private WaitingCommuterAdapter adapter;
 
+    private TextView emptyText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonRoute = (Button) findViewById(R.id.route_button);
         buttonMapView = (Button) findViewById(R.id.map_button);
 
+        emptyText = (TextView) findViewById(R.id.text_no_data);
+
         buttonRefresh.setOnClickListener(this);
         buttonRoute.setOnClickListener(this);
         buttonMapView.setOnClickListener(this);
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(adapter);
 
         updateList();
+        checkIfEmpty();
 
     }
 
@@ -90,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 result.add(dataSnapshot.getValue(WaitingCommuter.class));
                 adapter.notifyDataSetChanged();
+                checkIfEmpty();
             }
 
             @Override
@@ -106,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 int index = getItemIndex(waitingCommuter);
                 result.remove(index);
                 adapter.notifyItemRemoved(index);
+
+                checkIfEmpty();
             }
 
             @Override
@@ -151,6 +160,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
+    }
+
+    private void checkIfEmpty() {
+        if (result.size() == 0) {
+            recyclerView.setVisibility(View.INVISIBLE);
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyText.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

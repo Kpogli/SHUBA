@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,10 +86,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(adapter);
 
         updateList();
+        updateWaiterCountFB();
         checkIfEmpty();
 
     }
 
+    private void updateWaiterCountFB() {
+        FirebaseDatabase
+                .getInstance()
+                .getReference("count")
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        FirebaseDatabase
+                                .getInstance()
+                                .getReference("stops")
+                                .child(dataSnapshot.getKey())
+                                .child("waiterCount")
+                                .setValue(dataSnapshot.child("waiterCount").getValue());
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        FirebaseDatabase
+                                .getInstance()
+                                .getReference("stops")
+                                .child(dataSnapshot.getKey())
+                                .child("waiterCount")
+                                .setValue(dataSnapshot.child("waiterCount").getValue());
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
 
     private void updateList() {
         databaseReference.addChildEventListener(new ChildEventListener() {

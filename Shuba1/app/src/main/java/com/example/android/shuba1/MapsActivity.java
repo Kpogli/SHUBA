@@ -86,6 +86,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     //private String nameOfCurrentUser;
 
     private int stopCount = 0;
+    private boolean mProcessWait = false;
 
     private BusLocator busLocator;
     private StopLocator stopLocator;
@@ -214,6 +215,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Show stops on map
         trackStops(mMap);
 
+        // Update waiter count
+        updateWaiterCount();
+
         // Creating a criteria object to retrieve provider
         criteria = new Criteria();
 
@@ -241,7 +245,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker marker) {
-                if (!isLocationEnabled()) {
+
+                //This does not include the option that you should be near the stop
+                LatLng markerPosition = marker.getPosition();
+                markerLocation = new Location("marker");
+                markerLocation.setLatitude(markerPosition.latitude);
+                markerLocation.setLongitude(markerPosition.longitude);
+                marker.remove();
+                String markerLocationTitle = marker.getTitle();
+                refreshMarkers();
+                stayAlert(markerLocationTitle);
+
+                //This includes the condition that you should be near the stop
+                /*if (!isLocationEnabled()) {
                     showAlert();
                 } else {
                     if (location == null) {
@@ -274,7 +290,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     }
                 }
-
+*/
             }
 
             @Override
@@ -358,6 +374,37 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         dialog.show();
     }
 
+    private void updateWaiterCount() {
+        FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("waiting")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChildren()) {
+                            Iterable<DataSnapshot> waitingChildren = dataSnapshot.getChildren();
+                            for (DataSnapshot waitingChild : waitingChildren) {
+                                FirebaseDatabase
+                                        .getInstance()
+                                        .getReference()
+                                        .child("count")
+                                        .child(waitingChild.getKey())
+                                        .child("waiterCount")
+                                        .setValue(waitingChild.getChildrenCount());
+                            }
+                        } else {
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
     private void stayAlert(final String markerLocationTitle) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("You are at a Shuttle Stop")
@@ -367,13 +414,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     public void onClick(DialogInterface dialogInterface, int i) {
                         final FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                        FirebaseDatabase.getInstance()
-                                .getReference("waiting")
+                        mProcessWait = true;
+
+
+                            FirebaseDatabase
+                                    .getInstance()
+                                    .getReference()
+                                    .child("waiting")
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            if (mProcessWait) {
+                                                if (dataSnapshot.child(markerLocationTitle).hasChild(user.getUid())) {
+                                                    mProcessWait = false;
+                                                } else {
+                                                    FirebaseDatabase
+                                                            .getInstance()
+                                                            .getReference()
+                                                            .child("waiting")
+                                                            .child(markerLocationTitle)
+                                                            .child(user.getUid())
+                                                            .setValue("RandomValue");
+
+                                                    mProcessWait = false;
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+
+                        /*FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child("waiting")
                                 .child(markerLocationTitle)
                                 .child(user.getUid())
                                 .child("waiter")
                                 .setValue(user.getEmail());
-
+*/
                         Toast.makeText(getApplicationContext(), "A bus is on the way. Patience please.", Toast.LENGTH_SHORT).show();
                     }
                 })

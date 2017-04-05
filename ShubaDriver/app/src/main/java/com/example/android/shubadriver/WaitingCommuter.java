@@ -6,11 +6,11 @@ package com.example.android.shubadriver;
 
 public class WaitingCommuter {
     public String stopName;
-    public String waiterCount;
+    public int waiterCount;
     public String key;
     public Double longitude;
 
-    public WaitingCommuter(String stopName, String waiterCount, String key, Double longitude) {
+    public WaitingCommuter(String stopName, int waiterCount, String key, Double longitude) {
         this.stopName = stopName;
         this.waiterCount = waiterCount;
         this.key = key;
@@ -23,7 +23,7 @@ public class WaitingCommuter {
 
     public void setStopName(String stopName) {this.stopName = stopName;}
 
-    public void setWaiterCount(String waiterCount) {this.waiterCount = waiterCount;}
+    public void setWaiterCount(int waiterCount) {this.waiterCount = waiterCount;}
 
     public void setKey(String key) {this.key = key;}
 
@@ -31,7 +31,7 @@ public class WaitingCommuter {
 
     public String getStopName() {return stopName;}
 
-    public String getWaiterCount() {return waiterCount;}
+    public int getWaiterCount() {return waiterCount;}
 
     public String getKey() {return key;}
 

@@ -6,6 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -16,6 +22,11 @@ import java.util.List;
 public class WaitingCommuterAdapter extends RecyclerView.Adapter<WaitingCommuterAdapter.WaitingCommuterViewHolder> {
 
     private List<WaitingCommuter> list;
+    private boolean mProcessWait = false;
+    private boolean mProcessWaitCount = false;
+    private boolean mProcessWaitCountToZero = false;
+
+
 
     public WaitingCommuterAdapter(List<WaitingCommuter> list) {
         this.list = list;
@@ -28,9 +39,106 @@ public class WaitingCommuterAdapter extends RecyclerView.Adapter<WaitingCommuter
 
     @Override
     public void onBindViewHolder(WaitingCommuterViewHolder holder, int position) {
-        WaitingCommuter waitingCommuter = list.get(position);
+        final WaitingCommuter waitingCommuter = list.get(position);
         holder.textStopName.setText(waitingCommuter.stopName);
-        holder.textWaiterCount.setText(waitingCommuter.waiterCount);
+        holder.textWaiterCount.setText(String.valueOf(waitingCommuter.waiterCount));
+
+        holder.clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mProcessWait = true;
+                mProcessWaitCount = true;
+                mProcessWaitCountToZero = true;
+                final int zero = 0;
+
+
+                FirebaseDatabase
+                        .getInstance()
+                        .getReference()
+                        .child("waiting")
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessWait) {
+                                    if (dataSnapshot.child(waitingCommuter.stopName).hasChildren()) {
+                                        FirebaseDatabase
+                                                .getInstance()
+                                                .getReference()
+                                                .child("waiting")
+                                                .child(waitingCommuter.stopName)
+                                                .removeValue();
+                                        mProcessWait = false;
+                                    } else {
+                                        mProcessWait = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                FirebaseDatabase
+                        .getInstance()
+                        .getReference()
+                        .child("count")
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessWaitCount) {
+                                    if (dataSnapshot.child(waitingCommuter.stopName).hasChildren()) {
+                                        FirebaseDatabase
+                                                .getInstance()
+                                                .getReference()
+                                                .child("count")
+                                                .child(waitingCommuter.stopName)
+                                                .removeValue();
+                                        mProcessWaitCount = false;
+                                    } else {
+                                        mProcessWaitCount = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                FirebaseDatabase
+                        .getInstance()
+                        .getReference("stops")
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (mProcessWaitCountToZero) {
+                                    if (dataSnapshot.child(waitingCommuter.stopName).hasChildren()) {
+                                        FirebaseDatabase
+                                                .getInstance()
+                                                .getReference()
+                                                .child("stops")
+                                                .child(waitingCommuter.stopName)
+                                                .child("waiterCount")
+                                                .setValue(zero);
+                                        mProcessWaitCountToZero = false;
+                                    } else {
+                                        mProcessWaitCountToZero = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+            }
+        });
     }
 
     @Override

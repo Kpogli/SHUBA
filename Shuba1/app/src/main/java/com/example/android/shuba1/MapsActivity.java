@@ -559,7 +559,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //final ArrayList<String> locNames;
         locationTitles = new ArrayList<>();
 
-        childEventListener = stopsRef.addChildEventListener(new ChildEventListener() {
+        childEventListener = stopsRef.orderByChild("longitude").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 stopLocator = dataSnapshot.getValue(StopLocator.class);

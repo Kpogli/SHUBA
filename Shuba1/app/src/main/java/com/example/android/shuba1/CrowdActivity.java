@@ -24,7 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.database.ServerValue;
 
+import java.math.BigInteger;
 import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,6 +46,9 @@ public class CrowdActivity extends AppCompatActivity {
 
     private String userName;
     private String temp_key;
+
+    //private Date messagesFromDate;
+    private long timeStampToStart = new Date().getTime()-(6*60*60*1000);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +98,7 @@ public class CrowdActivity extends AppCompatActivity {
     private void displayChatMessages() {
         chatConversation = (ListView) findViewById(R.id.msg_view);
 
-        adapter = new FirebaseListAdapter<ChatMessage>(this,ChatMessage.class,R.layout.message,FirebaseDatabase.getInstance().getReference().child("crowd")) {
+        adapter = new FirebaseListAdapter<ChatMessage>(this,ChatMessage.class,R.layout.message,FirebaseDatabase.getInstance().getReference().child("crowd").orderByChild("timestamp").startAt(timeStampToStart)) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
 
@@ -123,6 +128,8 @@ public class CrowdActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //handle arrow click here
@@ -132,6 +139,54 @@ public class CrowdActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.nothing_yet) {
             Toast.makeText(CrowdActivity.this, "Does nothing yet", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.six_hours) {
+            timeStampToStart = new Date().getTime()-(6*60*60*1000);
+            displayChatMessages();
+
+            Toast.makeText(CrowdActivity.this, "Messages from Last 6 Hours", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.twelve_hours) {
+            timeStampToStart = new Date().getTime()-(12*60*60*1000);
+            displayChatMessages();
+
+            Toast.makeText(CrowdActivity.this, "Messages from Last 12 Hours", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.twentyfour_hours) {
+            timeStampToStart = new Date().getTime()-(24*60*60*1000);
+            displayChatMessages();
+
+            Toast.makeText(CrowdActivity.this, "Messages from Last 24 hours", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.fortyeight_hours) {
+            timeStampToStart = new Date().getTime()-(48*60*60*1000);
+            displayChatMessages();
+
+            Toast.makeText(CrowdActivity.this, "Messages from Last 48 Hours", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.last_week) {
+            timeStampToStart = new Date().getTime()-(7*24*60*60*1000);
+            displayChatMessages();
+
+            Toast.makeText(CrowdActivity.this, "Messages from Last Week", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.last_2_weeks) {
+            timeStampToStart = new Date().getTime()-(2*7*24*60*60*1000);
+            displayChatMessages();
+
+            Toast.makeText(CrowdActivity.this, "Messages from Last 2 Weeks", Toast.LENGTH_SHORT).show();
+        }
+
+        if (item.getItemId() == R.id.all_messages) {
+            timeStampToStart = 0;
+            displayChatMessages();
+            Toast.makeText(CrowdActivity.this, "All messages", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);

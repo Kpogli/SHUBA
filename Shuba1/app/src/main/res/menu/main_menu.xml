@@ -6,4 +6,32 @@
         app:showAsAction="never"
         android:id="@+id/nothing_yet" />
 
+    <item android:title="last 6 Hours"
+        app:showAsAction="never"
+        android:id="@+id/six_hours" />
+
+    <item android:title="last 12 Hours"
+        app:showAsAction="never"
+        android:id="@+id/twelve_hours" />
+
+    <item android:title="last 24 Hours"
+        app:showAsAction="never"
+        android:id="@+id/twentyfour_hours" />
+
+    <item android:title="last 48 Hours"
+        app:showAsAction="never"
+        android:id="@+id/fortyeight_hours" />
+
+    <item android:title="last Week"
+        app:showAsAction="never"
+        android:id="@+id/last_week" />
+
+    <item android:title="last 2 Weeks"
+        app:showAsAction="never"
+        android:id="@+id/last_2_weeks" />
+
+    <item android:title="All"
+        app:showAsAction="never"
+        android:id="@+id/all_messages" />
+
 </menu>

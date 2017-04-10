@@ -172,7 +172,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             FirebaseDatabase.getInstance()
                     .getReference("buses")
                     .child(user.getUid())
-                    .setValue(new BusLocator(user.getDisplayName(), user.getEmail(), location.getLatitude(), location.getLongitude()));
+                    .setValue(new BusLocator(user.getDisplayName(), user.getEmail(), location.getLatitude(), location.getLongitude(), location.getSpeed()));
 
 
         }

@@ -12,13 +12,15 @@ public class BusLocator {
     private String driverEmail;
     private Double latitude;
     private Double longitude;
+    private float speed;
     private Long timestamp;
 
-    public BusLocator(String driverName, String driverEmail, Double latitude, Double longitude) {
+    public BusLocator(String driverName, String driverEmail, Double latitude, Double longitude, float speed) {
         this.driverName = driverName;
         this.driverEmail = driverEmail;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.speed = speed;
 
         // Initialize to current time
         timestamp = new Date().getTime();
@@ -41,6 +43,9 @@ public class BusLocator {
         this.timestamp = timestamp;
     }
 
+    public void setSpeed(float speed) { this.speed = speed;}
+
+
 
 
     public String getDriverName() { return driverName;}
@@ -54,5 +59,8 @@ public class BusLocator {
     public long getTimestamp() {
         return timestamp;
     }
+
+    public float getSpeed() { return speed;}
+
 
 }

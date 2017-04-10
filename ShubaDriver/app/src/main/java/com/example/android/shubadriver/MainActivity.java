@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateList() {
-        databaseReference.addChildEventListener(new ChildEventListener() {
+        databaseReference.orderByChild("longitude").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 result.add(dataSnapshot.getValue(WaitingCommuter.class));

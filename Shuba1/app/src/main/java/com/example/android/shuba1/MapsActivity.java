@@ -81,7 +81,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LatLng myPosition;
 
     private ArrayList<LatLng> locationStops;
-    private ArrayList<String> locationTitles;
+    public static ArrayList<String> locationTitles;
 
     //private String nameOfCurrentUser;
 
@@ -137,9 +137,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                     case R.id.nearby_stops:
-                        //Intent a = new Intent(MapsActivity.this, RegistrationActivity.class);
+                        Intent nearbyStops = new Intent(MapsActivity.this, NearbyStopsActivity.class);
+                        startActivity(nearbyStops);
                         drawerLayout.closeDrawers();
-                        //startActivity(a);
+                        item.setChecked(false);
                         break;
 
                     case R.id.crowd:

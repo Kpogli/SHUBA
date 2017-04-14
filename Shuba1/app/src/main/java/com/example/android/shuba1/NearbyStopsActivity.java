@@ -1,0 +1,114 @@
+package com.example.android.shuba1;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TabHost;
+
+import com.example.android.shuba1.com.example.adapters.MyFragmentPagerAdapter;
+import com.example.android.shuba1.com.example.fragments.Fragment1;
+import com.example.android.shuba1.com.example.fragments.Fragment2;
+import com.example.android.shuba1.com.example.fragments.Fragment3;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.android.shuba1.MapsActivity.locationTitles;
+
+public class NearbyStopsActivity extends AppCompatActivity {
+    private Toolbar toolbar;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
+
+    private ViewPager viewPager;
+    private TabHost tabHost;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_nearby_stops);
+
+        toolbar = (Toolbar) findViewById(R.id.app_bar_crowd);
+        setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(Color.RED);
+
+        //add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        initViewPager();
+        initTabHost();
+    }
+
+    private void initTabHost() {
+        tabHost = (TabHost) findViewById(R.id.tabhost);
+        tabHost.setup();
+
+        ArrayList<String> tabNames = locationTitles;
+
+        for (int i = 0; i < tabNames.size(); i++) {
+            TabHost.TabSpec tabSpec;
+            tabSpec = tabHost.newTabSpec(tabNames.get(i));
+            tabSpec.setIndicator(tabNames.get(i));
+            tabSpec.setContent(new FakeContent(getApplicationContext()));
+            tabHost.addTab(tabSpec);
+        }
+
+    }
+
+    public class FakeContent implements TabHost.TabContentFactory {
+        Context context;
+        public FakeContent(Context mcontext) {
+            context = mcontext;
+        }
+
+        @Override
+        public View createTabContent(String tag) {
+            View fakeView = new View(context);
+            fakeView.setMinimumHeight(0);
+            fakeView.setMinimumWidth(0);
+            return fakeView;
+        }
+    }
+
+    private void initViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        List<Fragment> listFragments = new ArrayList<Fragment>();
+        listFragments.add(new Fragment1());
+        listFragments.add(new Fragment2());
+        listFragments.add(new Fragment3());
+
+        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), listFragments);
+        viewPager.setAdapter(myFragmentPagerAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish();   //close this activity and return to previous.:)
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

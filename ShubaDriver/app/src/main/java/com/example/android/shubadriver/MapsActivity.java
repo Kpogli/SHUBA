@@ -164,15 +164,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private final LocationListener locationListener = new LocationListener() {
+
+        private Location lastLocation;
+
         public void onLocationChanged(Location location) {
+
+            double speed = 0;
+
             Toast.makeText(getApplicationContext(),"changed", Toast.LENGTH_SHORT).show();
+
+            // Calculate speed manually
+            if (this.lastLocation != null) {
+                speed = ((Math.sqrt(Math.pow(location.getLongitude()-lastLocation.getLongitude(), 2)
+                + Math.pow(location.getLatitude()-lastLocation.getLatitude(), 2))
+                        /(location.getTime()-this.lastLocation.getTime()))*3600)/1000;
+            }
+
+            // if there is speed from location
+            if (location.hasSpeed()) {
+                // get location speed
+                speed = (location.getSpeed()*3600)/1000;
+                this.lastLocation = location;
+            }
 
             final FirebaseUser user = firebaseAuth.getCurrentUser();
 
             FirebaseDatabase.getInstance()
                     .getReference("buses")
                     .child(user.getUid())
-                    .setValue(new BusLocator(user.getDisplayName(), user.getEmail(), location.getLatitude(), location.getLongitude(), (location.getSpeed()*3600)/1000));
+                    .setValue(new BusLocator(user.getDisplayName(), user.getEmail(), location.getLatitude(), location.getLongitude(), (float) speed));
 
 
         }

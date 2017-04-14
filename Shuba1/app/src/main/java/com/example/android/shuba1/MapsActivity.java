@@ -500,9 +500,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions busMarkerOptions = new MarkerOptions();
                 busMarkerOptions.position(bus);
                 busMarkerOptions.title(driverName);
-                busMarkerOptions.snippet(speed +" KmpH");
+                busMarkerOptions.snippet(speed+" KmpH");
 
-                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_25px));
+                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_24dp));
 
                 Marker marker = mMap.addMarker(busMarkerOptions);
                 markers.put(dataSnapshot.getKey(), marker);
@@ -516,19 +516,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String driverName = busLocator.getDriverName();
                 Double latitude = busLocator.getLatitude();
                 Double longitude = busLocator.getLongitude();
+                float speed = busLocator.getSpeed();
                 Long timestamp = busLocator.getTimestamp();
                 LatLng bus = new LatLng(latitude,longitude);
 
                 MarkerOptions busMarkerOptions = new MarkerOptions();
                 busMarkerOptions.position(bus);
                 busMarkerOptions.title(driverName);
-                busMarkerOptions.snippet("Estimated time to next stop");
+                busMarkerOptions.snippet(speed+" KmpH");
 
                 if (markers.containsKey(dataSnapshot.getKey())) {
                     markers.get(dataSnapshot.getKey()).remove();
                 }
 
-                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_25px));
+                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_24dp));
 
                 Marker marker = mMap.addMarker(busMarkerOptions);
                 markers.put(dataSnapshot.getKey(), marker);

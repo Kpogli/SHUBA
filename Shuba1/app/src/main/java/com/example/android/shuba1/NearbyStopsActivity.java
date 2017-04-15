@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.TabHost;
 
 import com.example.android.shuba1.com.example.adapters.MyFragmentPagerAdapter;
@@ -25,7 +26,7 @@ import java.util.List;
 
 import static com.example.android.shuba1.MapsActivity.locationTitles;
 
-public class NearbyStopsActivity extends AppCompatActivity {
+public class NearbyStopsActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, TabHost.OnTabChangeListener {
     private Toolbar toolbar;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -68,7 +69,36 @@ public class NearbyStopsActivity extends AppCompatActivity {
             tabSpec.setContent(new FakeContent(getApplicationContext()));
             tabHost.addTab(tabSpec);
         }
+        tabHost.setOnTabChangedListener(this);
 
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int selectedItem) {
+        tabHost.setCurrentTab(selectedItem);
+    }
+
+    // viewPager listener
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    // tabHost listener
+    @Override
+    public void onTabChanged(String tabId) {
+        int selectedItem = tabHost.getCurrentTab();
+        viewPager.setCurrentItem(selectedItem);
+
+        HorizontalScrollView hScrollView =  (HorizontalScrollView) findViewById(R.id.h_scroll_view);
+        View tabView = tabHost.getCurrentTabView();
+        int scrollPos = tabView.getLeft() - (hScrollView.getWidth() - tabView.getWidth()) / 2;
+        hScrollView.smoothScrollTo(scrollPos, 0);
     }
 
     public class FakeContent implements TabHost.TabContentFactory {
@@ -93,8 +123,17 @@ public class NearbyStopsActivity extends AppCompatActivity {
         listFragments.add(new Fragment2());
         listFragments.add(new Fragment3());
 
+        listFragments.add(new Fragment1());
+        listFragments.add(new Fragment2());
+        listFragments.add(new Fragment3());
+
+        listFragments.add(new Fragment1());
+        listFragments.add(new Fragment2());
+        listFragments.add(new Fragment3());
+
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), listFragments);
         viewPager.setAdapter(myFragmentPagerAdapter);
+        viewPager.addOnPageChangeListener(this);
     }
 
     @Override

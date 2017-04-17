@@ -80,7 +80,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LatLng latLng;
     private LatLng myPosition;
 
-    private ArrayList<LatLng> locationStops;
+    public static ArrayList<LatLng> locationStops;
+    public static ArrayList<Double> locationLatitudes;
+    public static ArrayList<Double> locationLongitudes;
     public static ArrayList<String> locationTitles;
 
     //private String nameOfCurrentUser;
@@ -556,6 +558,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void trackStops(final GoogleMap mMap) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        locationLatitudes = new ArrayList<>();
+        locationLongitudes = new ArrayList<>();
+
         //final ArrayList<LatLng> locStops;
         locationStops = new ArrayList<>();
 
@@ -565,14 +570,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         childEventListener = stopsRef.orderByChild("longitude").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                stopLocator = dataSnapshot.getValue(StopLocator.class);
-                String stopName = stopLocator.getStopName();
-                Double latitude = stopLocator.getLatitude();
-                Double longitude = stopLocator.getLongitude();
-                LatLng stop = new LatLng(latitude,longitude);
 
-                locationStops.add(stop);
+                stopLocator = dataSnapshot.getValue(StopLocator.class);
+
+                String stopName = stopLocator.getStopName();
                 locationTitles.add(stopName);
+
+                Double latitude = stopLocator.getLatitude();
+                locationLatitudes.add(latitude);
+
+                Double longitude = stopLocator.getLongitude();
+                locationLongitudes.add(longitude);
+
+                LatLng stop = new LatLng(latitude,longitude);
+                locationStops.add(stop);
 
                 mMap.addMarker(new MarkerOptions().position(stop).title(stopName).draggable(true)).showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(stop));

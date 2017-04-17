@@ -17,6 +17,7 @@ import com.example.android.shuba1.com.example.adapters.MyFragmentPagerAdapter;
 import com.example.android.shuba1.com.example.fragments.Fragment1;
 import com.example.android.shuba1.com.example.fragments.Fragment2;
 import com.example.android.shuba1.com.example.fragments.Fragment3;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.android.shuba1.MapsActivity.locationLatitudes;
+import static com.example.android.shuba1.MapsActivity.locationLongitudes;
+import static com.example.android.shuba1.MapsActivity.locationStops;
 import static com.example.android.shuba1.MapsActivity.locationTitles;
 
 public class NearbyStopsActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, TabHost.OnTabChangeListener {
@@ -119,17 +123,16 @@ public class NearbyStopsActivity extends AppCompatActivity implements ViewPager.
     private void initViewPager() {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         List<Fragment> listFragments = new ArrayList<Fragment>();
-        listFragments.add(new Fragment1());
-        listFragments.add(new Fragment2());
-        listFragments.add(new Fragment3());
 
-        listFragments.add(new Fragment1());
-        listFragments.add(new Fragment2());
-        listFragments.add(new Fragment3());
+        ArrayList<Double> tabLocationLatitude = locationLatitudes;
+        ArrayList<Double> tabLocationLongitude = locationLongitudes;
 
-        listFragments.add(new Fragment1());
-        listFragments.add(new Fragment2());
-        listFragments.add(new Fragment3());
+        ArrayList<String> tabLocationTitle = locationTitles;
+        ArrayList<LatLng> tabLocationStops = locationStops;
+
+        for (int i = 0; i < tabLocationTitle.size(); i++) {
+            listFragments.add(Fragment1.newInstance(tabLocationTitle.get(i), tabLocationLatitude.get(i), tabLocationLongitude.get(i)));
+        }
 
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), listFragments);
         viewPager.setAdapter(myFragmentPagerAdapter);

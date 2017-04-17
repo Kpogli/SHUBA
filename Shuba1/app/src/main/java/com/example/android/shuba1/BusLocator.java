@@ -8,12 +8,12 @@ import java.util.Date;
 
 public class BusLocator {
 
-    private String driverName;
-    private String driverEmail;
-    private Double latitude;
-    private Double longitude;
-    private float speed;
-    private Long timestamp;
+    public String driverName;
+    public String driverEmail;
+    public Double latitude;
+    public Double longitude;
+    public float speed;
+    public Long timestamp;
 
     public BusLocator(String driverName, String driverEmail, Double latitude, Double longitude, float speed) {
         this.driverName = driverName;

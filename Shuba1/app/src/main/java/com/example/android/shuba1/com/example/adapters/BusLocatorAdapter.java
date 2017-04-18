@@ -1,5 +1,7 @@
 package com.example.android.shuba1.com.example.adapters;
 
+import android.location.Location;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.shuba1.BusLocator;
+import com.example.android.shuba1.NearbyStopsActivity;
 import com.example.android.shuba1.R;
+import com.example.android.shuba1.com.example.fragments.Fragment1;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -30,7 +35,21 @@ public class BusLocatorAdapter extends RecyclerView.Adapter<BusLocatorAdapter.Bu
     public void onBindViewHolder(BusLocatorViewHolder holder, int position) {
         final BusLocator busLocator = list.get(position);
         holder.textDriverName.setText(busLocator.driverName);
-        holder.textDistance.setText("Distance");
+
+        LatLng driverPosition = new LatLng(busLocator.latitude, busLocator.longitude);
+        LatLng locationPosition = new LatLng(Fragment1.locationLatitudeActual, Fragment1.locationLongitudeActual);
+
+        Location driverLocation = new Location("Driver");
+        driverLocation.setLatitude(driverPosition.latitude);
+        driverLocation.setLongitude(driverPosition.longitude);
+
+        Location locationLocation = new Location("Location");
+        locationLocation.setLatitude(locationPosition.latitude);
+        locationLocation.setLongitude(locationPosition.longitude);
+
+        double distance = Math.floor(driverLocation.distanceTo(locationLocation));
+
+        holder.textDistance.setText(distance+" Metres Away");
         holder.textETA.setText(busLocator.speed+" KmpH");
     }
 

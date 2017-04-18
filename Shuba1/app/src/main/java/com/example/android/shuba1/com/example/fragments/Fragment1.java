@@ -34,6 +34,10 @@ public class Fragment1 extends Fragment{
     private TextView locationLatitude;
     private TextView locationLongitude;
 
+    public static Double locationLatitudeActual;
+    public static Double locationLongitudeActual;
+
+
     private RecyclerView recyclerView;
     private List<BusLocator> result;
     private BusLocatorAdapter adapter;
@@ -138,6 +142,17 @@ public class Fragment1 extends Fragment{
 
         View v = inflater.inflate(R.layout.fragment1_layout, container, false);
 
+        locationName = (TextView) v.findViewById(R.id.textView1);
+        locationLatitude = (TextView) v.findViewById(R.id.textView2);
+        locationLongitude = (TextView) v.findViewById(R.id.textView3);
+
+        locationLatitudeActual = getLatitude();
+        locationLongitudeActual = getLongitude();
+
+        locationName.setText(getTitle());
+        locationLatitude.setText(String.valueOf(getLatitude()));
+        locationLongitude.setText(String.valueOf(getLongitude()));
+
         result = new ArrayList<>();
 
         recyclerView = (RecyclerView) v.findViewById(R.id.bus_rv);
@@ -157,7 +172,7 @@ public class Fragment1 extends Fragment{
         return v;
     }
 
-    @Override
+    /*@Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -169,6 +184,6 @@ public class Fragment1 extends Fragment{
         locationLatitude.setText(String.valueOf(getLatitude()));
         locationLongitude.setText(String.valueOf(getLongitude()));
 
-    }
+    }*/
 
 }

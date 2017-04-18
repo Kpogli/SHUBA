@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.android.shuba1.BusLocator;
 import com.example.android.shuba1.R;
 import com.example.android.shuba1.WaitingCommuter;
+import com.example.android.shuba1.com.example.adapters.BusLocatorAdapter;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +33,10 @@ public class Fragment1 extends Fragment{
     private TextView locationName;
     private TextView locationLatitude;
     private TextView locationLongitude;
+
+    private RecyclerView recyclerView;
+    private List<BusLocator> result;
+    private BusLocatorAdapter adapter;
 
     public Fragment1() {
         // required empty public constructor
@@ -76,11 +81,78 @@ public class Fragment1 extends Fragment{
         return args.getDouble("longitude");
     }
 
+    public void updateList() {
+        FirebaseDatabase
+                .getInstance()
+                .getReference("buses")
+                .addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        result.add(dataSnapshot.getValue(BusLocator.class));
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        BusLocator busLocator = dataSnapshot.getValue(BusLocator.class);
+                        int index = getItemIndex(busLocator);
+                        result.set(index, busLocator);
+                        adapter.notifyItemChanged(index);
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        BusLocator busLocator = dataSnapshot.getValue(BusLocator.class);
+                        int index = getItemIndex(busLocator);
+                        result.remove(index);
+                        adapter.notifyItemRemoved(index);
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private int getItemIndex(BusLocator busLocator) {
+        int index = -1;
+
+        for (int i = 0; i < result.size(); i++) {
+            if (result.get(i).longitude.equals(busLocator.longitude)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment1_layout, container, false);
+
+        result = new ArrayList<>();
+
+        recyclerView = (RecyclerView) v.findViewById(R.id.bus_rv);
+        recyclerView.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        adapter = new BusLocatorAdapter(result);
+
+        recyclerView.setAdapter(adapter);
+
+        updateList();
 
         return v;
     }
@@ -96,7 +168,6 @@ public class Fragment1 extends Fragment{
         locationName.setText(getTitle());
         locationLatitude.setText(String.valueOf(getLatitude()));
         locationLongitude.setText(String.valueOf(getLongitude()));
-
 
     }
 

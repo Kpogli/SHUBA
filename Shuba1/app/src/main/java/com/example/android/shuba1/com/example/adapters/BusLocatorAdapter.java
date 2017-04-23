@@ -50,7 +50,15 @@ public class BusLocatorAdapter extends RecyclerView.Adapter<BusLocatorAdapter.Bu
         double distance = Math.floor(driverLocation.distanceTo(locationLocation));
 
         holder.textDistance.setText(distance+" Metres Away");
-        holder.textETA.setText(busLocator.speed+" KmpH");
+
+        if (busLocator.speed != 0) {
+            double ETA = Math.floor((((distance/1000)/busLocator.speed)*60));
+
+            holder.textETA.setText(ETA+" Minutes Away");
+        } else {
+            holder.textETA.setText("Bus is Stationary");
+        }
+
     }
 
     @Override

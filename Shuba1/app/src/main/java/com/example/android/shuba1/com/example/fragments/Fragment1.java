@@ -142,16 +142,16 @@ public class Fragment1 extends Fragment{
 
         View v = inflater.inflate(R.layout.fragment1_layout, container, false);
 
-        locationName = (TextView) v.findViewById(R.id.textView1);
-        locationLatitude = (TextView) v.findViewById(R.id.textView2);
-        locationLongitude = (TextView) v.findViewById(R.id.textView3);
+        //locationName = (TextView) v.findViewById(R.id.textView1);
+        //locationLatitude = (TextView) v.findViewById(R.id.textView2);
+        //locationLongitude = (TextView) v.findViewById(R.id.textView3);
 
         locationLatitudeActual = getLatitude();
         locationLongitudeActual = getLongitude();
 
-        locationName.setText(getTitle());
-        locationLatitude.setText(String.valueOf(getLatitude()));
-        locationLongitude.setText(String.valueOf(getLongitude()));
+        //locationName.setText(getTitle());
+        //locationLatitude.setText(String.valueOf(getLatitude()));
+        //locationLongitude.setText(String.valueOf(getLongitude()));
 
         result = new ArrayList<>();
 

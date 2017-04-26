@@ -128,7 +128,7 @@ public class Fragment1 extends Fragment{
         int index = -1;
 
         for (int i = 0; i < result.size(); i++) {
-            if (result.get(i).longitude.equals(busLocator.longitude)) {
+            if (result.get(i).driverEmail.equals(busLocator.driverEmail)) {
                 index = i;
                 break;
             }

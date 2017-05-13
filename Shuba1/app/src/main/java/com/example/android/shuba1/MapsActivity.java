@@ -505,7 +505,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 busMarkerOptions.title(driverName);
                 busMarkerOptions.snippet(speed+" KmpH");
 
-                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_24dp));
+                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_trial));
 
                 Marker marker = mMap.addMarker(busMarkerOptions);
                 markers.put(dataSnapshot.getKey(), marker);
@@ -532,7 +532,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     markers.get(dataSnapshot.getKey()).remove();
                 }
 
-                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_24dp));
+                busMarkerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_black_trial));
 
                 Marker marker = mMap.addMarker(busMarkerOptions);
                 markers.put(dataSnapshot.getKey(), marker);

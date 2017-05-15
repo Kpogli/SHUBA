@@ -79,6 +79,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Location markerLocation;
     private LatLng latLng;
     private LatLng myPosition;
+    private FloatingActionButton fab;
 
     public static ArrayList<LatLng> locationStops;
     public static ArrayList<Double> locationLatitudes;
@@ -326,7 +327,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //Floating action bar stuff
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener(){
 
             ArrayList<LatLng> locStops = locationStops;
@@ -588,6 +589,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 mMap.addMarker(new MarkerOptions().position(stop).title(stopName).draggable(true)).showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(stop));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(stop,18.0f));
+
+                fab.setVisibility(View.VISIBLE);
 
                 //Toast.makeText(getApplicationContext(), "Last stop is "+stopName, Toast.LENGTH_SHORT).show();
             }

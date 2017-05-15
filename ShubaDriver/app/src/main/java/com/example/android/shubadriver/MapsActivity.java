@@ -124,7 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ArrayList<String> locTitles = locationTitles;
             int i = 0;
 
-            @Override
+            @Override   
             public void onClick(View view) {
                 if (i == locTitles.size()) {
                     i = 0;

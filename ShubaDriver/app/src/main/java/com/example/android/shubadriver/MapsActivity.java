@@ -33,6 +33,8 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private FloatingActionButton fab;
+
     private GoogleMap mMap;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
@@ -115,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         //Floating action bar stuff
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener(){
 
             ArrayList<LatLng> locStops = locationStops;
@@ -232,6 +234,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(stop).title(stopName)).showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(stop));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(stop,18.0f));
+
+                fab.setVisibility(View.VISIBLE);
 
                 //Toast.makeText(getApplicationContext(), "Last stop is "+stopName, Toast.LENGTH_SHORT).show();
             }

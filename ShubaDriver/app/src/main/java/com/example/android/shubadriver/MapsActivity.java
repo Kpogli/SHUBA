@@ -93,7 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 5, locationListener);
 
 
 
@@ -124,7 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ArrayList<String> locTitles = locationTitles;
             int i = 0;
 
-            @Override   
+            @Override
             public void onClick(View view) {
                 if (i == locTitles.size()) {
                     i = 0;

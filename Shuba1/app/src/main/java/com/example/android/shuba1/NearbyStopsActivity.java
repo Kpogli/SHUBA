@@ -45,7 +45,7 @@ public class NearbyStopsActivity extends AppCompatActivity implements ViewPager.
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_crowd);
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundColor(Color.RED);
+        toolbar.setBackgroundColor(Color.TRANSPARENT);
 
         //add back arrow to toolbar
         if (getSupportActionBar() != null) {

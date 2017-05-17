@@ -293,8 +293,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         //Toast.makeText(getApplicationContext(), "You are "+ range +" metres away! Get closer.", Toast.LENGTH_SHORT).show();
 
                     }
-                }
-*/
+                }*/
+
             }
 
             @Override

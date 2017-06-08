@@ -32,34 +32,41 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="80dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/login_title"
-                android:text="@string/login_title"
-                android:fontFamily="serif"
-                android:textSize="30sp"
-                android:textAlignment="center"
-                android:contentDescription="@string/login_title"
-                android:paddingBottom="16dp" />
 
             <ImageView
+                android:id="@+id/knust_logo"
                 android:layout_width="match_parent"
                 android:layout_height="109dp"
-                android:id="@+id/knust_logo"
-                android:src="@drawable/knust_logo"
-                app:srcCompat="@drawable/knust_logo"
+                android:adjustViewBounds="false"
+                android:contentDescription="@null"
+                android:cropToPadding="true"
+                android:paddingBottom="16dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/knust_logo_burned"
+                app:srcCompat="@drawable/knust_logo_burned" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:id="@+id/shuba_red_logo"
+                android:src="@drawable/shuba_red_logo_burned"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="false"
                 android:cropToPadding="true"
-                android:contentDescription="@null"
-                android:paddingBottom="16dp" />
+                android:contentDescription="@null"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -85,94 +92,46 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:layout_marginBottom="24dp"/>
+                    android:layout_marginBottom="5dp"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:paddingBottom="50dp">
 
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-
                 android:text="@string/action_sign_in"
+                android:textAllCaps="false"
                 android:textStyle="bold"
-                android:background="@color/colorPrimary"
+                android:background="@android:color/holo_red_dark"
                 android:elevation="0dp"
 
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="10dp" />
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <com.google.android.gms.common.SignInButton
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="10dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/fb_sign_in_button"
-                    style="?android:textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
 
-                    android:text="@string/action_sign_in_fb"
-                    android:textStyle="bold"
-                    android:background="@color/colorPrimary"
-                    android:elevation="0dp"
 
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
+
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/OR"
-                android:text="@string/OR"
-                android:fontFamily="serif"
-                android:textSize="18sp"
-                android:textAlignment="center"
-                android:contentDescription="@string/OR"
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="24dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/email_register_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/action_register"
-                android:textStyle="bold"
-                android:background="@android:color/holo_red_light"
-                android:elevation="0dp"
-                android:textColor="@android:color/white"
-                android:onClick="onclick"
-                android:layout_gravity="center_vertical" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/login_page_info"
-                android:text="@string/login_page_info"
-                android:fontFamily="serif"
-                android:textSize="17sp"
-                android:textAlignment="center"
-                android:contentDescription="@string/login_page_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:textColor="@android:color/holo_red_light" />
+                android:contentDescription="@string/login_page_info"
+                android:fontFamily="serif"
+                android:clickable="true"
+                android:onClick="onclick"
+                android:text="@string/login_page_info"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="17sp" />
 
         </LinearLayout>
     </ScrollView>

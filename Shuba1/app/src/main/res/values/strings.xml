@@ -17,7 +17,7 @@
     <string name="login_title">Login</string>
     <string name="OR">OR</string>
     <string name="action_register">Join Us</string>
-    <string name="login_page_info">Join Us For A Joyful Ride On Campus</string>
+    <string name="login_page_info">Not A Member Yet? Join Us</string>
 
 
     <!-- String related to registration -->
@@ -25,7 +25,7 @@
     <string name="prompt_full_name">Full Name</string>
     <string name="action_register_short">Register</string>
     <string name="prompt_repeat_password">Repeat Password</string>
-    <string name="action_register_real">Add Me!</string>
+    <string name="action_register_real">Register With Us</string>
     <string name="back_to_login_page">Already Have An Account. Let Me In!</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_trial">Map</string>

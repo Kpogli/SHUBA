@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.shuba1.LoginActivity"
-    android:background="@android:color/white">
+    android:background="@android:color/holo_red_dark">
 
     <!-- Registration progress -->
     <ProgressBar
@@ -34,136 +34,141 @@
             android:id="@+id/email_registration_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@android:color/holo_red_dark"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/registration_title"
-                android:text="@string/registration_title"
-                android:fontFamily="serif"
-                android:textSize="30sp"
-                android:textAlignment="center"
-                android:contentDescription="@string/registration_title"
-                android:paddingBottom="16dp" />
 
             <ImageView
+                android:id="@+id/knust_logo"
                 android:layout_width="match_parent"
                 android:layout_height="109dp"
-                android:id="@+id/knust_logo"
-                android:src="@drawable/knust_logo"
-                app:srcCompat="@drawable/knust_logo"
-                android:scaleType="fitCenter"
                 android:adjustViewBounds="false"
-                android:cropToPadding="true"
                 android:contentDescription="@null"
-                android:paddingBottom="16dp" />
+                android:cropToPadding="true"
+                android:paddingBottom="16dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/knust_logo_burned"
+                app:srcCompat="@drawable/knust_logo_burned" />
 
-            <android.support.design.widget.TextInputLayout
+            <ImageView
+                android:id="@+id/shuba_red_logo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                    android:id="@+id/full_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_full_name"
-                    android:inputType="textPersonName"
-                    android:maxLines="1" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <AutoCompleteTextView
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1" />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/password1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/registration"
-                    android:imeActionLabel="@string/action_register_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/password2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_repeat_password"
-                    android:imeActionId="@+id/registration"
-                    android:imeActionLabel="@string/action_register_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:layout_marginBottom="24dp"/>
-
-            </android.support.design.widget.TextInputLayout>
+                android:layout_height="60dp"
+                android:adjustViewBounds="false"
+                android:contentDescription="@null"
+                android:cropToPadding="true"
+                android:paddingBottom="8dp"
+                android:paddingEnd="30dp"
+                android:paddingStart="30dp"
+                android:paddingTop="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/shuba_white_logo_burned" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-            <Button
-                android:id="@+id/email_register_button_real"
-                style="?android:textAppearanceSmall"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/full_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_full_name"
+                        android:inputType="textPersonName"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/password1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_password"
+                        android:imeActionId="@+id/registration"
+                        android:imeActionLabel="@string/action_register_short"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/password2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_repeat_password"
+                        android:imeActionId="@+id/registration"
+                        android:imeActionLabel="@string/action_register_short"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textPassword"
+                        android:maxLines="1" />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="@string/action_register_real"
-                android:textStyle="bold"
-                android:background="@android:color/holo_red_light"
-                android:elevation="0dp"
-                android:textColor="@android:color/white"
-                android:layout_gravity="center_vertical" />
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp">
+
+                <Button
+                    android:id="@+id/email_register_button_real"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#8b0000"
+                    android:elevation="0dp"
+                    android:text="@string/action_register_real"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/back_to_login_page"
-                android:text="@string/back_to_login_page"
-                android:fontFamily="serif"
-                android:textSize="14sp"
-                android:textAlignment="center"
-                android:contentDescription="@string/back_to_login_page"
-                android:layout_marginTop="30dp"
-                android:textColor="@android:color/holo_blue_dark"
-                android:clickable="true"
-                android:onClick="onclick_go_back"/>
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/registration_page_info"
-                android:text="@string/login_page_info"
-                android:fontFamily="serif"
-                android:textSize="17sp"
-                android:textAlignment="center"
-                android:contentDescription="@string/login_page_info"
                 android:layout_marginTop="30dp"
-                android:textColor="@android:color/holo_red_light" />
+                android:clickable="true"
+                android:contentDescription="@string/back_to_login_page"
+                android:fontFamily="serif"
+                android:onClick="onclick_go_back"
+                android:text="@string/back_to_login_page"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
 
 
         </LinearLayout></ScrollView></LinearLayout>

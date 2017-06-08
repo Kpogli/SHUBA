@@ -80,8 +80,8 @@ public class NearbyStopsActivity extends AppCompatActivity implements ViewPager.
         for (int i = 0; i < tabNames.size(); i++) {
             TabHost.TabSpec tabSpec;
             tabSpec = tabHost.newTabSpec(tabNames.get(i));
-            tabHost.getTabWidget().setStripEnabled(true);
-            tabHost.getTabWidget().setBackgroundColor(this.getResources().getColor(R.color.myHoloRedDark));
+            //tabHost.getTabWidget().setStripEnabled(true);
+            //tabHost.getTabWidget().setBackgroundColor(this.getResources().getColor(R.color.myHoloRedDark));
             tabSpec.setIndicator(tabNames.get(i));
             tabSpec.setContent(new FakeContent(getApplicationContext()));
             tabHost.addTab(tabSpec);

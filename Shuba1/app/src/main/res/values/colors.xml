@@ -6,4 +6,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="translucent">#80FFFFFF</color>
     <color name="myDarkRed">#8b0000</color>
+    <color name="myHoloRedDark">#ffcc0000</color>
+    <color name="myHoloRedLight">#ffff4444</color>
 </resources>

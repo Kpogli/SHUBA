@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="translucent">#80FFFFFF</color>
+    <color name="myDarkRed">#8b0000</color>
 </resources>

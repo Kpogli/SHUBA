@@ -26,6 +26,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -71,6 +73,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         progressDialog = new ProgressDialog(this);
+
+        //changing statusbar color
+        if (Build.VERSION.SDK_INT >= 21) {
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(this.getResources().getColor(R.color.myDarkRed));
+        }
 
         editTextEmail = (AutoCompleteTextView) findViewById(R.id.email);
         //will release the auto-complete later
